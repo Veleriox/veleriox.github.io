@@ -543,7 +543,7 @@ a:hover {
 .section-title {
     text-align: center;
     margin-bottom: 2.5rem;
-    color: #000;
+    color: var(--text-primary);
 }
 
 .section-intro {

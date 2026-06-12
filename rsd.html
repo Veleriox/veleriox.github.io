@@ -16,6 +16,117 @@
     <meta property="og:description" content="Documentary on road safety awareness created for the Delhi Road Safety Contest.">
     <meta property="og:url" content="https://veleriox.github.io/rsd.html">
     <meta property="og:image" content="https://veleriox.github.io/assets/og-image.png">
+    <style>
+        /* Download Modal Styles */
+        .download-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: var(--bg-secondary, #1a1a1a);
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid var(--border-color, #333);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--text-color, #fff);
+            font-size: 1.3rem;
+        }
+
+        .modal-content p {
+            margin: 1rem 0;
+            color: var(--text-secondary, #aaa);
+            font-size: 0.95rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .modal-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .modal-btn-confirm {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .modal-btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .modal-btn-cancel {
+            background-color: var(--bg-tertiary, #222);
+            color: var(--text-secondary, #aaa);
+            border: 1px solid var(--border-color, #333);
+        }
+
+        .modal-btn-cancel:hover {
+            background-color: var(--bg-hover, #2a2a2a);
+        }
+
+        .modal-close {
+            color: var(--text-secondary, #aaa);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-color, #fff);
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -50,6 +161,7 @@
             <div class="hero-container">
                 <h1 class="hero-title">Roads We Use: Stories We Ignore</h1>
                 <p class="hero-subtitle">A documentary on the choices we make on the road—and the consequences that follow.</p>
+                <button onclick="openDownloadModal()" class="cta-button">Watch Documentary</button>
             </div>
         </div>
     </section>
@@ -100,13 +212,9 @@
             </p>
             
             <div style="text-align: center;">
-                <a href="https://drive.google.com/file/d/1FigONWDprNW_1Y8ktjvQzjtxK1VGr2aP/view?usp=drive_link" 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
-                   class="cta-button" 
-                   style="display: inline-block;">
+                <button onclick="openDownloadModal()" class="cta-button" style="display: inline-block; cursor: pointer; border: none;">
                     Watch Now
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -125,6 +233,20 @@
             </div>
         </div>
     </section>
+
+    <!-- Download Modal -->
+    <div id="downloadModal" class="download-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeDownloadModal()">&times;</span>
+            <h3>Download Documentary</h3>
+            <p>Are you sure you want to download the documentary?</p>
+            <p style="font-size: 0.85rem; color: var(--text-secondary, #888);">File size: ~180 MB</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeDownloadModal()">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" onclick="confirmDownload()">Download</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -170,10 +292,39 @@
     <script src="assets/js/form.js"></script>
 
     <script>
-  // Get the current year
-       const currentYear = new Date().getFullYear();
-  // Insert it into the span with id="year"
-       document.getElementById("year").textContent = currentYear;
+        // Get the current year
+        const currentYear = new Date().getFullYear();
+        document.getElementById("year").textContent = currentYear;
+
+        // Modal Functions
+        function openDownloadModal() {
+            document.getElementById("downloadModal").style.display = "block";
+        }
+
+        function closeDownloadModal() {
+            document.getElementById("downloadModal").style.display = "none";
+        }
+
+        function confirmDownload() {
+            // Trigger download of rsd.mp4
+            const link = document.createElement('a');
+            link.href = '/rsd.mp4';
+            link.download = 'Roads_We_Use_Stories_We_Ignore.mp4';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Close modal after download starts
+            closeDownloadModal();
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById("downloadModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
 
 </body>

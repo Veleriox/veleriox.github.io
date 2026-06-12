@@ -306,9 +306,9 @@
         }
 
         function confirmDownload() {
-            // Trigger download of rsd.mp4
+            // Trigger download of rsd.mp4 from assets folder
             const link = document.createElement('a');
-            link.href = '/rsd.mp4';
+            link.href = 'assets/rsd.mp4';
             link.download = 'Roads_We_Use_Stories_We_Ignore.mp4';
             document.body.appendChild(link);
             link.click();

@@ -306,9 +306,9 @@
         }
 
         function confirmDownload() {
-            // Trigger download of rsd.mp4 from assets folder
+            // Trigger download from GitHub releases
             const link = document.createElement('a');
-            link.href = 'assets/rsd.mp4';
+            link.href = 'https://github.com/Veleriox/veleriox.github.io/releases/download/Releases/The.Moment.We.Ignore.mp4';
             link.download = 'Roads_We_Use_Stories_We_Ignore.mp4';
             document.body.appendChild(link);
             link.click();
